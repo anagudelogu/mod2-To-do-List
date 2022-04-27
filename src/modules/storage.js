@@ -1,5 +1,3 @@
-import { forEach } from 'lodash';
-
 export default class Storage {
   static getEntry() {
     let TASK_LIST;

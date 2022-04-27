@@ -1,7 +1,7 @@
 import Storage from './storage.js';
 
 export const LIST = document.querySelector('.list');
-export let VALUE = document.querySelector('.list__task');
+export const VALUE = document.querySelector('.list__task');
 const LI = document.createElement('li');
 const INPUT = document.createElement('input');
 const SPAN = document.createElement('span');

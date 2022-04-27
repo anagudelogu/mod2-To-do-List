@@ -3,7 +3,7 @@ import Ui, { LIST, VALUE } from './modules/ui.js';
 import Storage from './modules/storage.js';
 import Task from './modules/task.js';
 
-//Display tasks from Local storage
+// Display tasks from Local storage
 Ui.display();
 
 // Add task
@@ -12,18 +12,18 @@ FORM.addEventListener('submit', (e) => {
   e.preventDefault();
   const TASK_LIST = Storage.getEntry();
   if (
-    VALUE.value !== '' &&
-    !TASK_LIST.some((e) => e.description === VALUE.value)
+    VALUE.value !== ''
+    && !TASK_LIST.some((e) => e.description === VALUE.value)
   ) {
-    //Get length Array
+    // Get length Array
     const LENGTH = TASK_LIST.length;
-    //Create new task
+    // Create new task
     const TASK = new Task(VALUE.value, LENGTH + 1);
-    //Create element in UI
+    // Create element in UI
     Ui.createTask(TASK);
-    //Add new task to local Storage
+    // Add new task to local Storage
     Storage.addEntry(TASK);
-    //Clear input
+    // Clear input
     Ui.clearInput();
   } else if (TASK_LIST.some((e) => e.description === VALUE.value)) {
     VALUE.value = 'This task already exists!';
@@ -42,11 +42,11 @@ FORM.addEventListener('submit', (e) => {
 LIST.addEventListener('click', (e) => {
   const IN = e.target;
   const ACTIVE_TASKS = Array.from(
-    document.querySelectorAll('.list__text')
+    document.querySelectorAll('.list__text'),
   );
   if (
-    IN.classList.contains('list__text') ||
-    IN.classList.contains('list__task')
+    IN.classList.contains('list__text')
+    || IN.classList.contains('list__task')
   ) {
     ACTIVE_TASKS.forEach((task) => {
       if (task.parentNode.classList.contains('selected')) {
@@ -57,15 +57,15 @@ LIST.addEventListener('click', (e) => {
     if (IN.classList.contains('list__text')) {
       IN.parentNode.classList.toggle('selected');
       const ICON = document.querySelector(
-        '.selected .material-icons'
+        '.selected .material-icons',
       );
       ICON.innerText = 'delete';
       // Remove a task
       ICON.addEventListener('click', (element) => {
         const ELEM = element.target;
-        //Remove from UI
+        // Remove from UI
         Ui.removeTask(ELEM);
-        //Remove from Storage
+        // Remove from Storage
         Storage.delEntry(ELEM.parentNode.children[1].value);
       });
 
@@ -80,7 +80,7 @@ LIST.addEventListener('click', (e) => {
       IN.addEventListener('change', () => {
         const VALUE = IN.value;
         IN.parentNode.classList.remove('selected');
-        //Update Local Storage
+        // Update Local Storage
         Storage.editEntry(TASK_DESC, VALUE);
       });
     }
