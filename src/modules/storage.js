@@ -1,3 +1,5 @@
+import { forEach } from 'lodash';
+
 export default class Storage {
   static getEntry() {
     let TASK_LIST;
@@ -19,11 +21,16 @@ export default class Storage {
     Storage.setEntry(TASK_LIST);
   }
 
-  static delEntry(entry) {
+  static delEntry(i) {
     const TASK_LIST = Storage.getEntry();
-    TASK_LIST.forEach((task, i) => {
-      if (entry.index === task.index) {
-        TASK_LIST.splice(i, 1);
+    TASK_LIST.forEach((task, index) => {
+      if (i === task.index) {
+        TASK_LIST.splice(index, 1);
+        TASK_LIST.forEach((t) => {
+          if (t.index > index) {
+            t.index -= 1;
+          }
+        });
       }
     });
     Storage.setEntry(TASK_LIST);

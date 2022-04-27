@@ -34,8 +34,8 @@ export default class Ui {
     LIST.appendChild(LI_ITEM);
   }
 
-  static removeTask(task) {
-    task.parentNode.remove();
+  static removeTask(element) {
+    element.parentNode.remove();
   }
 
   static clearInput() {
