@@ -10,9 +10,13 @@ Ui.display();
 const FORM = document.querySelector('form');
 FORM.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (VALUE.value !== null) {
+  const TASK_LIST = Storage.getEntry();
+  if (
+    VALUE.value !== '' &&
+    !TASK_LIST.some((e) => e.description === VALUE.value)
+  ) {
     //Get length Array
-    const LENGTH = Storage.getEntry().length;
+    const LENGTH = TASK_LIST.length;
     //Create new task
     const TASK = new Task(VALUE.value, LENGTH + 1);
     //Create element in UI
@@ -21,6 +25,16 @@ FORM.addEventListener('submit', (e) => {
     Storage.addEntry(TASK);
     //Clear input
     Ui.clearInput();
+  } else if (TASK_LIST.some((e) => e.description === VALUE.value)) {
+    VALUE.value = 'This task already exists!';
+    setTimeout(() => {
+      Ui.clearInput();
+    }, 2000);
+  } else {
+    VALUE.value = 'Please, enter a task.';
+    setTimeout(() => {
+      Ui.clearInput();
+    }, 2000);
   }
 });
 
