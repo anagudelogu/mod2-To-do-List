@@ -21,10 +21,10 @@ export default class Storage {
     Storage.setEntry(TASK_LIST);
   }
 
-  static delEntry(i) {
+  static delEntry(lastDesc) {
     const TASK_LIST = Storage.getEntry();
     TASK_LIST.forEach((task, index) => {
-      if (i === task.index) {
+      if (lastDesc === task.description) {
         TASK_LIST.splice(index, 1);
         TASK_LIST.forEach((t) => {
           if (t.index > index) {

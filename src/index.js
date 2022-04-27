@@ -52,16 +52,7 @@ LIST.addEventListener('click', (e) => {
         //Remove from UI
         Ui.removeTask(ELEM);
         //Remove from Storage
-        const TASK_LIST = Storage.getEntry();
-        let index;
-        TASK_LIST.forEach((task) => {
-          if (
-            ELEM.parentNode.children[1].value === task.description
-          ) {
-            index = task.index;
-          }
-        });
-        Storage.delEntry(index);
+        Storage.delEntry(ELEM.parentNode.children[1].value);
       });
 
       // Edit a task
