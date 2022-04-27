@@ -5,13 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 </head>
 <body>
     <main>
-        <h1 class="list__title">Today's To Do</h1>
+        <h1 class="list__title">Today's To Do <span id="renew" class="material-icons gray">
+            autorenew
+            </span></h1>
         <ul class="list">
             <li class="list__item">
-                <input class="list__task" type="text" placeholder="Add to your list...">
+                <form action="#">
+                    <input class="list__task" type="text" placeholder="Add to your list...">
+                    <button type="submit"  id="submit" class="return material-icons gray">keyboard_return</button>
+                 </form>
             </li>
         </ul>
         <button class="list__button" type="button">Clear all completed</button>

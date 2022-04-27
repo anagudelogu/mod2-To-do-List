@@ -6,63 +6,119 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
 }
 
 body {
-  padding: 0;
-  margin: 0;
   background-color: lightgrey;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
+.material-icons.gray { color: #888; }
+
 main {
-  height: auto;
   max-height: 70%;
-  width: 40%;
+  min-width: 290px;
+  max-width: 600px;
+  width: 90%;
   margin: 0 auto;
   background-color: rgb(243, 243, 243);
   box-shadow: 0 0 5px #888;
 }
 
 .list__title {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: normal;
-  margin: 0;
-  padding: 10px 20px;
+  padding: 10px 10px 10px 20px;
   border: 0.5px solid lightgray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list__title .material-icons {
+  cursor: pointer;
 }
 
 .list {
+  min-height: 30vh;
+  max-height: 60vh;
   list-style: none;
-  padding: 0;
-  margin: 0;
+  overflow: auto;
 }
 
-.list__item {
-  padding: 10px 10px;
+.list__item,
+form {
+  padding: 0 10px;
   border: 0.2px solid lightgray;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 10px;
+  transition: background-color 0.4s ease-in-out;
+}
+
+form {
+  padding: 0;
+  border: none;
+  width: 100%;
+}
+
+.list__item.selected {
+  background-color: #fff6a7;
+}
+
+.list__checkbox {
+  max-width: 5%;
 }
 
 .list__task {
   background-color: inherit;
   border: none;
   font-style: italic;
-  padding: 5px;
+  padding: 10px;
+  width: 90%;
 }
 
 .list__text {
-  background-color: inherit;
+  background-color: transparent;
   border: none;
+  padding: 10px 0;
+  width: 90%;
+}
+
+input[type=text]:focus {
+  outline: none;
+}
+
+.list__item .material-icons {
+  max-width: 5%;
+  cursor: move;
+}
+
+.list__task + .return {
+  appearance: none;
+  border: none;
+  width: 2%;
+  margin-right: 15px;
+  cursor: pointer;
 }
 
 .list__button {
   background-color: rgb(218, 218, 218);
+  color: #888;
   border: none;
   width: 100%;
   padding: 15px;
+  cursor: pointer;
+}
+
+.list__button:hover {
+  color: black;
+  text-decoration: underline;
 }

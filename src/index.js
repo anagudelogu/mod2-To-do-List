@@ -1,44 +1,88 @@
 import './style.css';
+import Ui, { LIST, VALUE } from './modules/ui.js';
+import Storage from './modules/storage.js';
+import Task from './modules/task.js';
 
-const LIST = document.querySelector('.list');
-const LI = document.createElement('li');
-const INPUT = document.createElement('input');
-const TASKS = [
-  {
-    description: 'Wash the dishes',
-    completed: false,
-    index: 0,
-  },
-  {
-    description: 'Complete To-Do List project',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'Clean my room',
-    completed: false,
-    index: 2,
-  },
-];
+// Display tasks from Local storage
+Ui.display();
 
-const DISPLAY = () => {
-  TASKS.forEach((task) => {
-    const LI_ITEM = LI.cloneNode(true);
-    const CHECK = INPUT.cloneNode(true);
-    const INPUT_TEXT = INPUT.cloneNode(true);
+// Add task
+const FORM = document.querySelector('form');
+FORM.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const TASK_LIST = Storage.getEntry();
+  if (
+    VALUE.value !== ''
+    && !TASK_LIST.some((e) => e.description === VALUE.value)
+  ) {
+    // Get length Array
+    const LENGTH = TASK_LIST.length;
+    // Create new task
+    const TASK = new Task(VALUE.value, LENGTH + 1);
+    // Create element in UI
+    Ui.createTask(TASK);
+    // Add new task to local Storage
+    Storage.addEntry(TASK);
+    // Clear input
+    Ui.clearInput();
+  } else if (TASK_LIST.some((e) => e.description === VALUE.value)) {
+    VALUE.value = 'This task already exists!';
+    setTimeout(() => {
+      Ui.clearInput();
+    }, 2000);
+  } else {
+    VALUE.value = 'Please, enter a task.';
+    setTimeout(() => {
+      Ui.clearInput();
+    }, 2000);
+  }
+});
 
-    LI_ITEM.classList.add('list__item');
-    CHECK.setAttribute('type', 'checkbox');
-    CHECK.classList.add('list__checkbox');
-    INPUT_TEXT.setAttribute('type', 'text');
-    INPUT_TEXT.setAttribute('name', 'task');
-    INPUT_TEXT.setAttribute('value', task.description);
+// Selected color, remove and edit
+LIST.addEventListener('click', (e) => {
+  const IN = e.target;
+  const ACTIVE_TASKS = Array.from(
+    document.querySelectorAll('.list__text'),
+  );
+  if (
+    IN.classList.contains('list__text')
+    || IN.classList.contains('list__task')
+  ) {
+    ACTIVE_TASKS.forEach((task) => {
+      if (task.parentNode.classList.contains('selected')) {
+        task.parentNode.classList.remove('selected');
+        task.parentNode.children[2].innerText = 'more_vert';
+      }
+    });
+    if (IN.classList.contains('list__text')) {
+      IN.parentNode.classList.toggle('selected');
+      const ICON = document.querySelector(
+        '.selected .material-icons',
+      );
+      ICON.innerText = 'delete';
+      // Remove a task
+      ICON.addEventListener('click', (element) => {
+        const ELEM = element.target;
+        // Remove from UI
+        Ui.removeTask(ELEM);
+        // Remove from Storage
+        Storage.delEntry(ELEM.parentNode.children[1].value);
+      });
 
-    INPUT_TEXT.classList.add('list__text');
+      // Edit a task
+      const TASK_DESC = IN.value;
+      IN.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+          IN.blur();
+        }
+      });
 
-    LI_ITEM.append(CHECK, INPUT_TEXT);
-    LIST.appendChild(LI_ITEM);
-  });
-};
-
-DISPLAY();
+      IN.addEventListener('change', () => {
+        const VALUE = IN.value;
+        IN.parentNode.classList.remove('selected');
+        // Update Local Storage
+        Storage.editEntry(TASK_DESC, VALUE);
+      });
+    }
+  }
+});
