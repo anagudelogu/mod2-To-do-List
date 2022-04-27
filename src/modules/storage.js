@@ -36,11 +36,11 @@ export default class Storage {
     Storage.setEntry(TASK_LIST);
   }
 
-  static editEntry(entry, desc) {
+  static editEntry(lastDesc, newDesc) {
     const TASK_LIST = Storage.getEntry();
     TASK_LIST.forEach((task) => {
-      if (entry.index === task.index) {
-        task.description = desc;
+      if (lastDesc === task.description) {
+        task.description = newDesc;
       }
     });
     Storage.setEntry(TASK_LIST);

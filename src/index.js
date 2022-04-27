@@ -24,14 +24,15 @@ FORM.addEventListener('submit', (e) => {
   }
 });
 
-// Selected color and remove
+// Selected color, remove and edit
 LIST.addEventListener('click', (e) => {
+  const IN = e.target;
   const ACTIVE_TASKS = Array.from(
     document.querySelectorAll('.list__text')
   );
   if (
-    e.target.classList.contains('list__text') ||
-    e.target.classList.contains('list__task')
+    IN.classList.contains('list__text') ||
+    IN.classList.contains('list__task')
   ) {
     ACTIVE_TASKS.forEach((task) => {
       if (task.parentNode.classList.contains('selected')) {
@@ -39,12 +40,13 @@ LIST.addEventListener('click', (e) => {
         task.parentNode.children[2].innerText = 'more_vert';
       }
     });
-    if (e.target.classList.contains('list__text')) {
-      e.target.parentNode.classList.toggle('selected');
+    if (IN.classList.contains('list__text')) {
+      IN.parentNode.classList.toggle('selected');
       const ICON = document.querySelector(
         '.selected .material-icons'
       );
       ICON.innerText = 'delete';
+      // Remove a task
       ICON.addEventListener('click', (element) => {
         const ELEM = element.target;
         //Remove from UI
@@ -60,6 +62,21 @@ LIST.addEventListener('click', (e) => {
           }
         });
         Storage.delEntry(index);
+      });
+
+      // Edit a task
+      const TASK_DESC = IN.value;
+      IN.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+          IN.blur();
+        }
+      });
+
+      IN.addEventListener('change', () => {
+        const VALUE = IN.value;
+        IN.parentNode.classList.remove('selected');
+        //Update Local Storage
+        Storage.editEntry(TASK_DESC, VALUE);
       });
     }
   }
