@@ -129,3 +129,11 @@ input[type=text]:focus {
   color: black;
   text-decoration: underline;
 }
+
+
+/* DRAG */
+
+.list__item.dragging{
+  opacity: .5;
+  background-color: #888;
+}

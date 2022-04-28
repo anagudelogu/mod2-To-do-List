@@ -2,9 +2,13 @@ import './style.css';
 import Ui, { LIST, VALUE } from './modules/ui.js';
 import Storage from './modules/storage.js';
 import Task from './modules/task.js';
+import { get } from 'lodash';
 
 // Display tasks from Local storage
-Ui.display();
+window.addEventListener('DOMContentLoaded', () => {
+  Ui.display();
+  addEventListeners();
+});
 
 // Add task
 const FORM = document.querySelector('form');
@@ -12,8 +16,8 @@ FORM.addEventListener('submit', (e) => {
   e.preventDefault();
   const TASK_LIST = Storage.getEntry();
   if (
-    VALUE.value !== ''
-    && !TASK_LIST.some((e) => e.description === VALUE.value)
+    VALUE.value !== '' &&
+    !TASK_LIST.some((e) => e.description === VALUE.value)
   ) {
     // Get length Array
     const LENGTH = TASK_LIST.length;
@@ -36,17 +40,19 @@ FORM.addEventListener('submit', (e) => {
       Ui.clearInput();
     }, 2000);
   }
+
+  addEventListeners();
 });
 
 // Selected color, remove and edit
 LIST.addEventListener('click', (e) => {
   const IN = e.target;
   const ACTIVE_TASKS = Array.from(
-    document.querySelectorAll('.list__text'),
+    document.querySelectorAll('.list__text')
   );
   if (
-    IN.classList.contains('list__text')
-    || IN.classList.contains('list__task')
+    IN.classList.contains('list__text') ||
+    IN.classList.contains('list__task')
   ) {
     ACTIVE_TASKS.forEach((task) => {
       if (task.parentNode.classList.contains('selected')) {
@@ -57,7 +63,7 @@ LIST.addEventListener('click', (e) => {
     if (IN.classList.contains('list__text')) {
       IN.parentNode.classList.toggle('selected');
       const ICON = document.querySelector(
-        '.selected .material-icons',
+        '.selected .material-icons'
       );
       ICON.innerText = 'delete';
 
@@ -99,7 +105,7 @@ LIST.addEventListener('change', (e) => {
   }
   // Clear all
   const COMPLETED_TASKS = Array.from(
-    document.querySelectorAll('.list__checkbox:checked'),
+    document.querySelectorAll('.list__checkbox:checked')
   );
   const CLEAR_BUTTON = document.querySelector('.list__button');
   CLEAR_BUTTON.addEventListener('click', () => {
@@ -109,3 +115,63 @@ LIST.addEventListener('change', (e) => {
     Storage.clearCompleted();
   });
 });
+
+//drag
+function addEventListeners() {
+  const DRAGGABLES = document.querySelectorAll(
+    '.list__item:not(:nth-child(1))'
+  );
+  const DRAG_CONTAINER = document.querySelector('.list');
+
+  DRAGGABLES.forEach((draggable) => {
+    draggable.addEventListener('dragstart', dragStart);
+    draggable.addEventListener('dragend', dragEnd);
+  });
+  DRAG_CONTAINER.addEventListener('dragover', dragOver);
+}
+
+const dragStart = (e) => {
+  const elem = e.target;
+  elem.classList.add('dragging');
+};
+
+const dragEnd = (e) => {
+  const elem = e.target;
+  elem.classList.remove('dragging');
+  const NEW_ORDER = [...document.querySelectorAll('.list__text')];
+  //Storage
+  Storage.updateDragIndex(NEW_ORDER);
+};
+
+const dragOver = (e) => {
+  // console.log('Im dragover');
+  e.preventDefault();
+  const dragging = document.querySelector('.dragging');
+  const DRAG_CONTAINER = document.querySelector('.list');
+  const afterElement = getAfterElement(DRAG_CONTAINER, e.clientY);
+  if (afterElement === null) {
+    DRAG_CONTAINER.appendChild(dragging);
+  } else {
+    DRAG_CONTAINER.insertBefore(dragging, afterElement);
+  }
+};
+
+const getAfterElement = (container, y) => {
+  const draggableElements = [
+    ...container.querySelectorAll(
+      '.list__item:not(:nth-child(1)):not(.dragging)'
+    ),
+  ];
+  return draggableElements.reduce(
+    (closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset: offset, element: child };
+      } else {
+        return closest;
+      }
+    },
+    { offset: Number.NEGATIVE_INFINITY }
+  ).element;
+};

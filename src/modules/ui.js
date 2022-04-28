@@ -21,6 +21,7 @@ export default class Ui {
     const ICON = SPAN.cloneNode(true);
 
     LI_ITEM.classList.add('list__item');
+    LI_ITEM.setAttribute('draggable', 'true');
     CHECK.setAttribute('type', 'checkbox');
     CHECK.classList.add('list__checkbox');
     INPUT_TEXT.setAttribute('type', 'text');
