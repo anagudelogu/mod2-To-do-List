@@ -43,7 +43,6 @@ export default class Ui {
   }
 
   static clearCompleted(arr) {
-    const TASK_LIST = Storage.getEntry();
     arr.forEach((element) => {
       element.parentNode.remove();
     });

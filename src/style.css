@@ -77,11 +77,6 @@ form {
   max-width: 5%;
 }
 
-.list__checkbox:checked + .list__text{
-  color: #888;
-  text-decoration: line-through;
-}
-
 .list__task {
   background-color: inherit;
   border: none;
@@ -95,6 +90,11 @@ form {
   border: none;
   padding: 10px 0;
   width: 90%;
+}
+
+.list__checkbox:checked + .list__text {
+  color: #888;
+  text-decoration: line-through;
 }
 
 input[type=text]:focus {
