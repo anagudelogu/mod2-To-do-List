@@ -4,6 +4,10 @@
 
 In this project, I'm creating an interactive and minimal To-do list, that's going to let the final user add, remove, edit and keep track of their daily tasks.
 
+## Live Demo
+
+[To-do list project](https://anagudelogu-to-do-list.netlify.app/)
+
 ## Built With
 
 - HTML

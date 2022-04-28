@@ -92,6 +92,11 @@ form {
   width: 90%;
 }
 
+.list__checkbox:checked + .list__text {
+  color: #888;
+  text-decoration: line-through;
+}
+
 input[type=text]:focus {
   outline: none;
 }
@@ -103,6 +108,8 @@ input[type=text]:focus {
 
 .list__task + .return {
   appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   border: none;
   width: 2%;
   margin-right: 15px;

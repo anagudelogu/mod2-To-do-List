@@ -60,6 +60,7 @@ LIST.addEventListener('click', (e) => {
         '.selected .material-icons',
       );
       ICON.innerText = 'delete';
+
       // Remove a task
       ICON.addEventListener('click', (element) => {
         const ELEM = element.target;
@@ -82,7 +83,29 @@ LIST.addEventListener('click', (e) => {
         IN.parentNode.classList.remove('selected');
         // Update Local Storage
         Storage.editEntry(TASK_DESC, VALUE);
+        // Change Icon
+        ICON.innerText = 'more_vert';
       });
     }
   }
+});
+
+// Completed
+LIST.addEventListener('change', (e) => {
+  if (e.target.classList.contains('list__checkbox')) {
+    const DESC = e.target.parentNode.children[1].value;
+    // Toggle completed on Local Storage
+    Storage.taskCompleted(DESC);
+  }
+  // Clear all
+  const COMPLETED_TASKS = Array.from(
+    document.querySelectorAll('.list__checkbox:checked'),
+  );
+  const CLEAR_BUTTON = document.querySelector('.list__button');
+  CLEAR_BUTTON.addEventListener('click', () => {
+    // Ui
+    Ui.clearCompleted(COMPLETED_TASKS);
+    // Storage
+    Storage.clearCompleted();
+  });
 });

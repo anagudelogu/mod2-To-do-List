@@ -41,4 +41,10 @@ export default class Ui {
   static clearInput() {
     VALUE.value = '';
   }
+
+  static clearCompleted(arr) {
+    arr.forEach((element) => {
+      element.parentNode.remove();
+    });
+  }
 }
