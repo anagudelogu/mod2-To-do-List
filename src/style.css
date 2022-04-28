@@ -108,6 +108,8 @@ input[type=text]:focus {
 
 .list__task + .return {
   appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   border: none;
   width: 2%;
   margin-right: 15px;
