@@ -53,4 +53,20 @@ export default class Storage {
     });
     Storage.setEntry(TASK_LIST);
   }
+
+  static clearCompleted() {
+    const TASK_LIST = Storage.getEntry();
+
+    TASK_LIST.forEach((completedTask, index) => {
+      if (completedTask.completed) {
+        TASK_LIST.splice(index, 1);
+        TASK_LIST.forEach((t) => {
+          if (t.index > index) {
+            t.index -= 1;
+          }
+        });
+      }
+    });
+    Storage.setEntry(TASK_LIST);
+  }
 }

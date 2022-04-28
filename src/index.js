@@ -97,4 +97,15 @@ LIST.addEventListener('change', (e) => {
     //Toggle completed on Local Storage
     Storage.taskCompleted(DESC);
   }
+  // Clear all
+  const COMPLETED_TASKS = Array.from(
+    document.querySelectorAll('.list__checkbox:checked')
+  );
+  const CLEAR_BUTTON = document.querySelector('.list__button');
+  CLEAR_BUTTON.addEventListener('click', () => {
+    // Ui
+    Ui.clearCompleted(COMPLETED_TASKS);
+    // Storage
+    Storage.clearCompleted();
+  });
 });

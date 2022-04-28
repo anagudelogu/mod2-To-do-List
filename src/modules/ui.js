@@ -41,4 +41,11 @@ export default class Ui {
   static clearInput() {
     VALUE.value = '';
   }
+
+  static clearCompleted(arr) {
+    const TASK_LIST = Storage.getEntry();
+    arr.forEach((element) => {
+      element.parentNode.remove();
+    });
+  }
 }
