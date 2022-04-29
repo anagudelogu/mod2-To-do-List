@@ -130,7 +130,6 @@ input[type=text]:focus {
   text-decoration: underline;
 }
 
-
 /* DRAG */
 
 .list__item.dragging {
