@@ -24,11 +24,7 @@ export default class Storage {
     TASK_LIST.forEach((task, index) => {
       if (lastDesc === task.description) {
         TASK_LIST.splice(index, 1);
-        TASK_LIST.forEach((t) => {
-          if (t.index > index) {
-            t.index -= 1;
-          }
-        });
+        Storage.updateIndex(TASK_LIST);
       }
     });
     Storage.setEntry(TASK_LIST);
@@ -60,12 +56,28 @@ export default class Storage {
     TASK_LIST.forEach((completedTask, index) => {
       if (completedTask.completed) {
         TASK_LIST.splice(index, 1);
-        TASK_LIST.forEach((t) => {
-          if (t.index > index) {
-            t.index -= 1;
-          }
-        });
+        Storage.updateIndex(TASK_LIST);
       }
+    });
+    Storage.setEntry(TASK_LIST);
+  }
+
+  static updateIndex(arr) {
+    arr.forEach((task, index) => {
+      task.index = index + 1;
+    });
+    Storage.setEntry(arr);
+  }
+
+  static updateDragIndex(arr) {
+    const TASK_LIST = Storage.getEntry();
+    arr.forEach((task, index) => {
+      TASK_LIST.forEach((t) => {
+        if (task.value === t.description) {
+          t.index = index + 1;
+          TASK_LIST.sort((a, b) => a.index - b.index);
+        }
+      });
     });
     Storage.setEntry(TASK_LIST);
   }

@@ -2,9 +2,13 @@ import './style.css';
 import Ui, { LIST, VALUE } from './modules/ui.js';
 import Storage from './modules/storage.js';
 import Task from './modules/task.js';
+import DragDrop from './modules/dragDrop.js';
 
 // Display tasks from Local storage
-Ui.display();
+window.addEventListener('DOMContentLoaded', () => {
+  Ui.display();
+  DragDrop.addEventListeners();
+});
 
 // Add task
 const FORM = document.querySelector('form');
@@ -36,6 +40,8 @@ FORM.addEventListener('submit', (e) => {
       Ui.clearInput();
     }, 2000);
   }
+
+  DragDrop.addEventListeners();
 });
 
 // Selected color, remove and edit
