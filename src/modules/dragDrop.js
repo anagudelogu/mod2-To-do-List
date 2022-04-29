@@ -1,9 +1,9 @@
-import Storage from './storage';
+import Storage from './storage.js';
 
 export default class DragDrop {
   static addEventListeners() {
     const DRAGGABLES = document.querySelectorAll(
-      '.list__item:not(:nth-child(1))'
+      '.list__item:not(:nth-child(1))',
     );
     const DRAG_CONTAINER = document.querySelector('.list');
 
@@ -23,7 +23,7 @@ export default class DragDrop {
     const elem = e.target;
     elem.classList.remove('dragging');
     const NEW_ORDER = [...document.querySelectorAll('.list__text')];
-    //Storage
+    // Storage
     Storage.updateDragIndex(NEW_ORDER);
   }
 
@@ -33,7 +33,7 @@ export default class DragDrop {
     const DRAG_CONTAINER = document.querySelector('.list');
     const afterElement = DragDrop.getAfterElement(
       DRAG_CONTAINER,
-      e.clientY
+      e.clientY,
     );
     if (afterElement === null) {
       DRAG_CONTAINER.appendChild(dragging);
@@ -45,7 +45,7 @@ export default class DragDrop {
   static getAfterElement(container, y) {
     const draggableElements = [
       ...container.querySelectorAll(
-        '.list__item:not(:nth-child(1)):not(.dragging)'
+        '.list__item:not(:nth-child(1)):not(.dragging)',
       ),
     ];
     return draggableElements.reduce(
@@ -53,12 +53,11 @@ export default class DragDrop {
         const box = child.getBoundingClientRect();
         const offset = y - box.top - box.height / 2;
         if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
+          return { offset, element: child };
         }
+        return closest;
       },
-      { offset: Number.NEGATIVE_INFINITY }
+      { offset: Number.NEGATIVE_INFINITY },
     ).element;
   }
 }

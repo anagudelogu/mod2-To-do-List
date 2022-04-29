@@ -133,7 +133,7 @@ input[type=text]:focus {
 
 /* DRAG */
 
-.list__item.dragging{
-  opacity: .5;
+.list__item.dragging {
+  opacity: 0.5;
   background-color: #888;
 }

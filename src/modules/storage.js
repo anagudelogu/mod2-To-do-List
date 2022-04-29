@@ -75,9 +75,7 @@ export default class Storage {
       TASK_LIST.forEach((t) => {
         if (task.value === t.description) {
           t.index = index + 1;
-          TASK_LIST.sort((a, b) => {
-            return a.index - b.index;
-          });
+          TASK_LIST.sort((a, b) => a.index - b.index);
         }
       });
     });

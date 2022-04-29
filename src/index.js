@@ -2,7 +2,7 @@ import './style.css';
 import Ui, { LIST, VALUE } from './modules/ui.js';
 import Storage from './modules/storage.js';
 import Task from './modules/task.js';
-import DragDrop from './modules/dragDrop';
+import DragDrop from './modules/dragDrop.js';
 
 // Display tasks from Local storage
 window.addEventListener('DOMContentLoaded', () => {
@@ -16,8 +16,8 @@ FORM.addEventListener('submit', (e) => {
   e.preventDefault();
   const TASK_LIST = Storage.getEntry();
   if (
-    VALUE.value !== '' &&
-    !TASK_LIST.some((e) => e.description === VALUE.value)
+    VALUE.value !== ''
+    && !TASK_LIST.some((e) => e.description === VALUE.value)
   ) {
     // Get length Array
     const LENGTH = TASK_LIST.length;
@@ -48,11 +48,11 @@ FORM.addEventListener('submit', (e) => {
 LIST.addEventListener('click', (e) => {
   const IN = e.target;
   const ACTIVE_TASKS = Array.from(
-    document.querySelectorAll('.list__text')
+    document.querySelectorAll('.list__text'),
   );
   if (
-    IN.classList.contains('list__text') ||
-    IN.classList.contains('list__task')
+    IN.classList.contains('list__text')
+    || IN.classList.contains('list__task')
   ) {
     ACTIVE_TASKS.forEach((task) => {
       if (task.parentNode.classList.contains('selected')) {
@@ -63,7 +63,7 @@ LIST.addEventListener('click', (e) => {
     if (IN.classList.contains('list__text')) {
       IN.parentNode.classList.toggle('selected');
       const ICON = document.querySelector(
-        '.selected .material-icons'
+        '.selected .material-icons',
       );
       ICON.innerText = 'delete';
 
@@ -105,7 +105,7 @@ LIST.addEventListener('change', (e) => {
   }
   // Clear all
   const COMPLETED_TASKS = Array.from(
-    document.querySelectorAll('.list__checkbox:checked')
+    document.querySelectorAll('.list__checkbox:checked'),
   );
   const CLEAR_BUTTON = document.querySelector('.list__button');
   CLEAR_BUTTON.addEventListener('click', () => {
