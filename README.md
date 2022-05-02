@@ -6,7 +6,9 @@ In this project, I'm creating an interactive and minimal To-do list, that's goin
 
 ## Live Demo
 
-[To-do list project](https://anagudelogu-to-do-list.netlify.app/)
+Netlify: [To-do list project](https://anagudelogu-to-do-list.netlify.app/)
+
+GitHub pages: [To-do list project](https://anagudelogu.github.io/mod2-To-do-List/)
 
 ## Built With
 
