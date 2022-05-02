@@ -15,10 +15,10 @@ const FORM = document.querySelector('form');
 FORM.addEventListener('submit', (e) => {
   e.preventDefault();
   const TASK_LIST = Storage.getEntry();
-  if (
-    VALUE.value !== ''
-    && !TASK_LIST.some((e) => e.description === VALUE.value)
-  ) {
+  const DUPLICATE = TASK_LIST.some(
+    (e) => e.description === VALUE.value,
+  );
+  if (VALUE.value !== '' && !DUPLICATE) {
     // Get length Array
     const LENGTH = TASK_LIST.length;
     // Create new task
@@ -31,7 +31,7 @@ FORM.addEventListener('submit', (e) => {
     Ui.clearInput();
     // Add required event listeners to drag elements.
     DragDrop.addEventListeners();
-  } else if (TASK_LIST.some((e) => e.description === VALUE.value)) {
+  } else if (DUPLICATE) {
     // Validating the input.
     VALUE.value = 'This task already exists!';
     setTimeout(() => {
@@ -56,10 +56,11 @@ LIST.addEventListener('click', (e) => {
     || IN.classList.contains('list__task')
   ) {
     ACTIVE_TASKS.forEach((task) => {
+      const ICON = task.parentNode.children[2];
       if (task.parentNode.classList.contains('selected')) {
         task.parentNode.classList.remove('selected');
-        task.parentNode.children[2].innerText = 'more_vert';
-        task.parentNode.children[2].style.cursor = 'move';
+        ICON.innerText = 'more_vert';
+        ICON.style.cursor = 'move';
       }
     });
     if (IN.classList.contains('list__text')) {
