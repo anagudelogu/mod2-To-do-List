@@ -29,7 +29,10 @@ FORM.addEventListener('submit', (e) => {
     Storage.addEntry(TASK);
     // Clear input
     Ui.clearInput();
+    // Add required event listeners to drag elements.
+    DragDrop.addEventListeners();
   } else if (TASK_LIST.some((e) => e.description === VALUE.value)) {
+    // Validating the input.
     VALUE.value = 'This task already exists!';
     setTimeout(() => {
       Ui.clearInput();
@@ -40,11 +43,9 @@ FORM.addEventListener('submit', (e) => {
       Ui.clearInput();
     }, 2000);
   }
-
-  DragDrop.addEventListeners();
 });
 
-// Selected color, remove and edit
+// Selected, remove and edit
 LIST.addEventListener('click', (e) => {
   const IN = e.target;
   const ACTIVE_TASKS = Array.from(
@@ -58,6 +59,7 @@ LIST.addEventListener('click', (e) => {
       if (task.parentNode.classList.contains('selected')) {
         task.parentNode.classList.remove('selected');
         task.parentNode.children[2].innerText = 'more_vert';
+        task.parentNode.children[2].style.cursor = 'move';
       }
     });
     if (IN.classList.contains('list__text')) {
@@ -66,7 +68,7 @@ LIST.addEventListener('click', (e) => {
         '.selected .material-icons',
       );
       ICON.innerText = 'delete';
-
+      ICON.style.cursor = 'pointer';
       // Remove a task
       ICON.addEventListener('click', (element) => {
         const ELEM = element.target;
@@ -91,6 +93,8 @@ LIST.addEventListener('click', (e) => {
         Storage.editEntry(TASK_DESC, VALUE);
         // Change Icon
         ICON.innerText = 'more_vert';
+        // Change Cursor
+        ICON.style.cursor = 'move';
       });
     }
   }
