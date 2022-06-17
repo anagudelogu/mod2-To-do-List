@@ -2,6 +2,8 @@
 
 # To-Do List
 
+![image](https://user-images.githubusercontent.com/77069011/174409929-10442d35-f5ca-43e9-91a7-a209ec9957ce.png)
+
 In this project, I'm creating an interactive and minimal To-do list, that's going to let the final user add, remove, edit and keep track of their daily tasks.
 
 ## Live Demo
