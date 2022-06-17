@@ -1,11 +1,6 @@
 export default class Storage {
   static getEntry() {
-    let TASK_LIST;
-    if (!localStorage.getItem('taskList')) {
-      TASK_LIST = [];
-    } else {
-      TASK_LIST = JSON.parse(localStorage.getItem('taskList'));
-    }
+    const TASK_LIST = JSON.parse(localStorage.getItem('taskList')) || [];
     return TASK_LIST;
   }
 
